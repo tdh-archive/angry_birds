@@ -95,9 +95,9 @@ void Game::_user_input() noexcept {
             // Fire the bird
             double angle = atan2(force_y, force_x);
             this->_stage->fire_bird(
-                bird_o_x,
-                bird_o_y,
-                sqrt(force_x * force_x + force_y * force_y),
+                this->_stage->bird()->x(),
+                this->_stage->bird()->y(),
+                1.25 * sqrt(force_x * force_x + force_y * force_y),
                 angle);
 
             // Reset the force

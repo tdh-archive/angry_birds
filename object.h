@@ -33,7 +33,9 @@ class Object {
            ObjectType type,
            int x, int y,
            bool breakable = false)
-        : _win(parent), _type(type), _x(x), _y(y), _breakable(breakable) {
+        : _win(parent), _type(type), _x(x), _y(y),
+          _breakable(breakable),
+          _destroyed(false) {
         this->_asset = OBJECT_ASSETS.at(type);
     }
 

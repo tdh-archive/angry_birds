@@ -59,10 +59,6 @@ void Object::set_position(int x, int y) {
 }
 
 double Object::distance(int x, int y) const noexcept {
-    if (this->_destroyed) {
-        return false;
-    }
-
     int x_diff = abs(x - this->x());
     int y_diff = abs(y - this->y());
 

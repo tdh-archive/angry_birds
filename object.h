@@ -52,6 +52,9 @@ class Object {
     int x() const noexcept { return _x; }
     int y() const noexcept { return _y; }
 
+    bool destroyed() const noexcept { return _destroyed; }
+    bool breakable() const noexcept { return _breakable; }
+
   private:
     WINDOW *_win;
     ObjectType _type;
@@ -60,7 +63,7 @@ class Object {
     int _x;
     int _y;
 
-    bool _destroyed{};
+    bool _destroyed;
     bool _breakable;
 };
 

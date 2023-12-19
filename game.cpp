@@ -68,20 +68,28 @@ void Game::_user_input() noexcept {
         this->_stage->bird()->draw();
 
         if (c == 'a') {
-            ++force_x;
-            this->_stage->bird()->move(-1, 0);
-
+            if (force_x < 14) {
+                ++force_x;
+                this->_stage->bird()->move(-1, 0);
+            }
         } else if (c == 'd') {
-            --force_x;
-            this->_stage->bird()->move(1, 0);
-
+            if (force_x > -14) {
+                --force_x;
+                this->_stage->bird()->move(1, 0);
+            }
         } else if (c == 'w') {
-            if ((--force_y) % 5 == 0) {
-                this->_stage->bird()->move(0, 1);
+            if (force_y > -14) {
+                --force_y;
+                this->_stage->bird()->set_position(
+                    this->_stage->bird()->x(),
+                    bird_o_y - (int) (force_y / 5));
             }
         } else if (c == 's') {
-            if ((++force_y) % 5 == 0) {
-                this->_stage->bird()->move(0, -1);
+            if (force_y < 14) {
+                ++force_y;
+                this->_stage->bird()->set_position(
+                    this->_stage->bird()->x(),
+                    bird_o_y - (int) (force_y / 5));
             }
         } else if (c == ' ') {
             // Fire the bird
@@ -108,6 +116,9 @@ void Game::_user_input() noexcept {
                 return;
             }
         }
+
+        // DEBUG
+        mvwprintw(this->_win_stage, 1, 1, "Vx=%d, Vy=%d     ", force_x, force_y);
 
         // Draw the stage
         this->_stage->draw();
@@ -142,7 +153,7 @@ void Game::_game_over() const noexcept {
     mvwprintw(this->_win_stage,
               STAGE_HEIGHT / 2,
               (this->_width - 10) / 2,
-              "Game Over!");
+              "You lose!");
     wrefresh(this->_win_stage);
 
     // Wait for the user to press a key

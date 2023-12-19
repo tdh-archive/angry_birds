@@ -183,6 +183,8 @@ void Stage::fire_bird(const int o_x, const int o_y, const double v0, const doubl
     if (_type == ObjectType::PIG_SMALL) {
         collision_object->destroy();
         --this->_remaining_pigs;
+    } else if (collision_object->breakable()) {
+        collision_object->destroy();
     }
 
     // Move the bird back to the slingshot
@@ -196,6 +198,10 @@ void Stage::fire_bird(const int o_x, const int o_y, const double v0, const doubl
 
 Object *Stage::collision(int x, int y) noexcept {
     for (auto obj : this->_objects) {
+        if (obj->destroyed()) {
+            continue;
+        }
+
         if (obj->distance(x, y) <= 1.0) {
             return obj;
         }
